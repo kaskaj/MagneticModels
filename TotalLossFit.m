@@ -10,7 +10,7 @@ f = data_loss(:,3); % Frequency (Hz)
 freq = unique(f); % Vector of unique frequencies
 Nf = length(freq);
 
-%% Fit data
+%% Fit total loss
 % P = w1 * B^w2 * f^w3
 
 % Initial parameter guesses
@@ -45,11 +45,11 @@ end
 % Simple Least Squares fit
 w_ls = (X'*X) \ (X'*log(P));
 
-%% Predict
-B_new = linspace(min(B), max(B), 100);
-[B_new, f_new] = meshgrid(B_new, freq);
+%% Sample the model
+B_sample = linspace(min(B), max(B), 100);
+[B_sample, f_sample] = meshgrid(B_sample, freq);
 
-X_new = [ones(length(B_new(:)),1), log(B_new(:)), log(f_new(:))];
+X_new = [ones(length(B_sample(:)),1), log(B_sample(:)), log(f_sample(:))];
 P_model = exp(X_new*w_best);
 P_model_ls = exp(X_new*w_ls);
 
@@ -66,9 +66,9 @@ for k = 1:Nf
     % Original data
     s = plot(B(f==freq(k)),P(f==freq(k)),'o');
     % fminunc fit
-    p(k) = plot(B_new(f_new==freq(k)),P_model(f_new==freq(k)),'Color',s.Color);
+    p(k) = plot(B_sample(f_sample==freq(k)),P_model(f_sample==freq(k)),'Color',s.Color);
     % Simple LS fit
-    plot(B_new(f_new==freq(k)),P_model_ls(f_new==freq(k)),'--','Color',s.Color);
+    plot(B_sample(f_sample==freq(k)),P_model_ls(f_sample==freq(k)),'--','Color',s.Color);
 end
 xlabel('B (T)');
 ylabel('P (W/kg)');
