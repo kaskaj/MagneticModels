@@ -12,13 +12,13 @@ load('./data/init_curves/7s.mat','BH_init'); BH_7 = BH_init;
 load('./data/init_curves/8s.mat','BH_init'); BH_8 = BH_init;
 
 %% Vector of all initial curves
-% Skip initial curvature
-start = 20;
+N_start = 20;
 
-H_all = [BH_1(start:end,1);BH_2(start:end,1);BH_3(start:end,1);BH_4(start:end,1);BH_5(start,1);BH_6(start,1);BH_7(start,1);BH_8(start,1)];
-B_all = [BH_1(start:end,2);BH_2(start:end,2);BH_3(start:end,2);BH_4(start:end,2);BH_5(start,2);BH_6(start,2);BH_7(start,2);BH_8(start,2)];
+H_all = [BH_1(:,1);BH_2(:,1);BH_3(:,1);BH_4(:,1);BH_5(:,1);BH_6(:,1);BH_7(:,1);BH_8(:,1)];
+B_all = [BH_1(:,2);BH_2(:,2);BH_3(:,2);BH_4(:,2);BH_5(:,2);BH_6(:,2);BH_7(:,2);BH_8(:,2)];
 
 J_all = B_all-mu0*H_all;
+
 
 %% Fit the magnetization curve model
 % Optimized function
